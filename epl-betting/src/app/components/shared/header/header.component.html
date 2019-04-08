@@ -1,0 +1,23 @@
+<header>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+    <a to="/" class="navbar-brand">
+      LOGO
+      <!-- <img src={EplLogo('./premier-league-logo-header.png')}  alt="EPL Betting" height="50" /> -->
+    </a>
+
+    <ul class="navbar-nav">
+      <a class="nav-link" routerLink="/standings/premier-league" [routerLinkActive]=[this.activeClass]>EPL Standings</a>
+      <a class="nav-link" routerLink="/standings/betting" [routerLinkActive]=[this.activeClass]>Bet Standings</a>
+      <a class="nav-link" routerLink="/bet" [routerLinkActive]=[this.activeClass]>Place Bets</a>
+      <a class="nav-link" routerLink="/admin/setup-round" [routerLinkActive]=[this.activeClass]>Setup Round</a>
+      <a class="nav-link" routerLink="/admin/complete-round" [routerLinkActive]=[this.activeClass]>Complete Round</a>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+      <a class="nav-link" routerLink="/login" [routerLinkActive]=[this.activeClass]>Login</a>
+      <a class="nav-link" routerLink="/register" [routerLinkActive]=[this.activeClass]>Register</a>
+      <!-- <a routerLink="/logout" text="Logout"></a> -->
+      <span class="header-greeting">Hello, username!</span>
+    </ul>
+  </nav>
+</header>
