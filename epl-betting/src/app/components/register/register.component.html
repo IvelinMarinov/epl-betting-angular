@@ -3,23 +3,60 @@
     <br />
     <h1>Register</h1>
     <br />
-    <form (ngSubmit)="register()">
+    <form [formGroup]="form" (submit)="register()">
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" name="email" class="form-control" placeholder="Enter your email" />
+        <input type="text" formControlName="email" class="form-control" placeholder="Enter your email" />
         <br />
+        <div class="alert alert-danger" *ngIf="f.email.touched && f.email.errors?.required">
+          Email is required
+        </div>
+        <div class="alert alert-danger" *ngIf="f.email.touched && f.email.errors?.email">
+          Please enter a valid email
+        </div>
+
 
         <label for="username">Username</label>
-        <input type="text" name="username" class="form-control" placeholder="Choose your username" />
+        <input type="text" formControlName="username" class="form-control" placeholder="Choose your username" />
         <br />
-
-        <label for="password">Password</label>
-        <input type="password" name="password" class="form-control" placeholder="Choose your password"/>
-        <br />
+        <div class="alert alert-danger" *ngIf="f.username.touched && f.username.errors?.required">
+          Username is required
+        </div>
 
         <label for="dateOfBirth">Date of birth</label>
-        <input type="date" name="dateOfBirth" class="form-control" placeholder="Enter your date of birth"/>
+        <input type="date" formControlName="dateOfBirth" class="form-control" placeholder="Enter your date of birth" />
         <br />
+        <div class="alert alert-danger" *ngIf="f.dateOfBirth.touched && f.dateOfBirth.errors?.required">
+          Date of birth is required
+        </div>
+        <div class="alert alert-danger" *ngIf="f.dateOfBirth.touched && f.dateOfBirth.errors?.invalidDate">
+          Please enter a valid date
+        </div>
+        <div class="alert alert-danger" *ngIf="f.dateOfBirth.touched && f.dateOfBirth.errors?.underAge">
+          You must be at least 18 to register
+        </div>
+
+        <label for="password">Password</label>
+        <input type="password" formControlName="password" class="form-control" placeholder="Choose your password" />
+        <br />
+        <div class="alert alert-danger" *ngIf="f.password.touched && f.password.errors?.required">
+          Password is required
+        </div>
+        <div class="alert alert-danger" *ngIf="f.password.touched && f.password.errors?.pattern">
+          Password must be between 4 and 15 characters, and include at least one upper case letter, one lower case
+          letter, and one digit.
+        </div>
+
+        <label for="repeatPassword">Password</label>
+        <input type="password" formControlName="repeatPassword" class="form-control"
+          placeholder="Choose your password" />
+        <br />
+        <div class="alert alert-danger" *ngIf="f.repeatPassword.touched && f.repeatPassword.errors?.required">
+          Repeat Password is required
+        </div>
+        <div class="alert alert-danger" *ngIf="f.repeatPassword.touched && f.repeatPassword.errors?.mustMatch">
+          Passwords don't match
+        </div>
 
         <button type="submit" class="btn btn-lg btn-outline-success">Register</button>
       </div>
