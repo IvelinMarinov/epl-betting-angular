@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -10,7 +12,11 @@ export class RegisterComponent implements OnInit {
   @ViewChild('registerForm')
   form;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -46,7 +52,7 @@ export class RegisterComponent implements OnInit {
   }
 
   validateDateOfBirth(control: AbstractControl) {
-    if(control.errors) {
+    if (control.errors) {
       return null;
     }
 
@@ -61,7 +67,7 @@ export class RegisterComponent implements OnInit {
     let ageDate = new Date(ageDiffMs);
     let age = Math.abs(ageDate.getUTCFullYear() - 1970);
 
-    if(age < 18) {
+    if (age < 18) {
       return { underAge: true }
     }
 
@@ -69,6 +75,20 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    console.log(this.form)
+    const reqBody = {
+      username: this.f.username.value,
+      email: this.f.email.value,
+      password: this.f.password.value,
+      dateOfBirth: this.f.dateOfBirth.value
+    }
+
+      this.authService
+        .register(reqBody)
+        .subscribe((data) => {
+          console.log(data);
+          this.router.navigate(['/login']);
+        }, (err) => {
+          console.log('ERROR', err);
+        });
   }
 }

@@ -1,3 +1,26 @@
-<p>
-  login works!
-</p>
+<div class="container-fluid">
+  <div class="col-sm-6">
+      <br />
+      <h1>Login</h1>
+      <br />
+      <form class="form-group" [formGroup]="form" (submit)="login()">
+          <div class="form-group">
+              <label for="email">Email</label>
+              <input formControlName="email" type="text" class="form-control" placeholder="Enter your email" />
+              <br />
+              <div class="alert alert-danger" *ngIf="f.email.touched && f.email.errors?.required">
+                Email is required
+              </div>
+
+              <label for="password">Password</label>
+              <input formControlName="password" type="password" class="form-control" placeholder="Enter your password" />
+              <br />
+              <div class="alert alert-danger" *ngIf="f.password.touched && f.password.errors?.required">
+                Password is required
+              </div>
+
+              <button type="submit" class="btn btn-lg btn-outline-success">Login</button>
+          </div>
+      </form>
+  </div>
+</div>

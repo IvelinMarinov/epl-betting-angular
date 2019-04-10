@@ -14,10 +14,14 @@
     </ul>
 
     <ul class="navbar-nav ml-auto">
-      <a class="nav-link" routerLink="/login" [routerLinkActive]=[this.activeClass]>Login</a>
-      <a class="nav-link" routerLink="/register" [routerLinkActive]=[this.activeClass]>Register</a>
-      <!-- <a routerLink="/logout" text="Logout"></a> -->
-      <span class="header-greeting">Hello, username!</span>
+      <ng-container *ngIf="isLoggedIn">
+        <span class="header-greeting">Hello, username!</span>
+        <a *ngIf="isLoggedIn" class="nav-link" routerLink="/logout">Logout</a>
+      </ng-container>
+      <ng-container *ngIf="!isLoggedIn">
+        <a class="nav-link" routerLink="/login" [routerLinkActive]=[this.activeClass]>Login</a>
+        <a class="nav-link" routerLink="/register" [routerLinkActive]=[this.activeClass]>Register</a>
+      </ng-container>
     </ul>
   </nav>
 </header>

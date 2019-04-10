@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   private readonly baseUrl = 'http://localhost:5000/auth';
   private readonly loginUrl = this.baseUrl + '/login';
-  private readonly registerUrl = this.baseUrl + '/register';
+  private readonly registerUrl = this.baseUrl + '/signup';
 
   constructor(
     private http: HttpClient
@@ -29,5 +29,9 @@ export class AuthService {
 
   isAuthenticated() {
     return this.getToken() !== null;
+  }
+
+  getUsername() {
+    return localStorage.getItem('username');
   }
 }
