@@ -11,17 +11,23 @@
       <a class="nav-link" routerLink="/bet" [routerLinkActive]=[this.activeClass]>Place Bets</a>
       <a class="nav-link" routerLink="/admin/setup-round" [routerLinkActive]=[this.activeClass]>Setup Round</a>
       <a class="nav-link" routerLink="/admin/complete-round" [routerLinkActive]=[this.activeClass]>Complete Round</a>
-    </ul>
+    </ul>    
 
     <ul class="navbar-nav ml-auto">
-      <ng-container *ngIf="isLoggedIn">
+       <ng-container *ngIf="(isLoggedIn$ | async) as boolean">  
         <span class="header-greeting">Hello, username!</span>
-        <a *ngIf="isLoggedIn" class="nav-link" routerLink="/logout">Logout</a>
+        <a class="nav-link" routerLink="/logout">Logout</a>
       </ng-container>
-      <ng-container *ngIf="!isLoggedIn">
+      <ng-container *ngIf="!(isLoggedIn$ | async) as boolean">
         <a class="nav-link" routerLink="/login" [routerLinkActive]=[this.activeClass]>Login</a>
         <a class="nav-link" routerLink="/register" [routerLinkActive]=[this.activeClass]>Register</a>
       </ng-container>
     </ul>
+
+    <!-- <ng-container *ngIf="(!isLoggedIn$ | async)">
+      <h1>TEST</h1>>
+    </ng-container> -->
   </nav>
 </header>
+
+{{isLoggedIn$ | async}}

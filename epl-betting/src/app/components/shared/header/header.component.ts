@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { AuthService, User } from 'src/app/core/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -7,21 +8,31 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnChanges {
-  activeClass :string = "active";
-  isLoggedIn :boolean;
-  username :string;
+  activeClass: string = "active";
+  isLoggedIn$: Observable<boolean>;
+  user$: Observable<User>;
+  //username :string;
 
-  constructor(private authSevice :AuthService) { 
-    this.isLoggedIn = authSevice.isAuthenticated();
-    this.username = authSevice.getUsername();
+  constructor(private authSevice: AuthService) { 
+
+    this.isLoggedIn$= authSevice.isLoggedIn$;
+
+    //this.isLoggedIn$.subscribe(data => console.log(typeof(data), data))
+    //console.log(this.isLoggedIn$)
+
+    //this.username = authSevice.getUsername();
   }
 
   ngOnInit() {
   }
 
   ngOnChanges() {
-    this.isLoggedIn = this.authSevice.isAuthenticated();
-    this.username = this.authSevice.getUsername();
+    console.log('changing')
   }
+
+  // ngOnChanges() {
+  //   this.isLoggedIn$ = this.authSevice.isAuthenticated();
+  //   this.username = this.authSevice.getUsername();
+  // }
 
 }
