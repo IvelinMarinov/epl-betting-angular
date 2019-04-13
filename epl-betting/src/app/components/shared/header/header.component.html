@@ -8,26 +8,27 @@
     <ul class="navbar-nav">
       <a class="nav-link" routerLink="/standings/premier-league" [routerLinkActive]=[this.activeClass]>EPL Standings</a>
       <a class="nav-link" routerLink="/standings/betting" [routerLinkActive]=[this.activeClass]>Bet Standings</a>
-      <a class="nav-link" routerLink="/bet" [routerLinkActive]=[this.activeClass]>Place Bets</a>
-      <a class="nav-link" routerLink="/admin/setup-round" [routerLinkActive]=[this.activeClass]>Setup Round</a>
-      <a class="nav-link" routerLink="/admin/complete-round" [routerLinkActive]=[this.activeClass]>Complete Round</a>
+
+      <ng-container *ngIf="(isLoggedIn$ | async) as boolean">        
+        <a class="nav-link" routerLink="/bet" [routerLinkActive]=[this.activeClass]>Place Bets</a>
+      </ng-container>
+
+      <ng-container *ngIf="(isAdmin$ | async) as boolean">
+        <a class="nav-link" routerLink="/admin/setup-round" [routerLinkActive]=[this.activeClass]>Setup Round</a>
+        <a class="nav-link" routerLink="/admin/complete-round" [routerLinkActive]=[this.activeClass]>Complete Round</a>
+      </ng-container>      
     </ul>    
 
     <ul class="navbar-nav ml-auto">
-       <ng-container *ngIf="(isLoggedIn$ | async) as boolean">  
-        <span class="header-greeting">Hello, username!</span>
+       <ng-container *ngIf="(isLoggedIn$ | async) as boolean; else notLoggedIn">  
+        <span class="header-greeting">Hello, {{username$ | async}}!</span>
         <a class="nav-link" routerLink="/logout">Logout</a>
       </ng-container>
-      <ng-container *ngIf="!(isLoggedIn$ | async) as boolean">
+
+      <ng-template #notLoggedIn>
         <a class="nav-link" routerLink="/login" [routerLinkActive]=[this.activeClass]>Login</a>
         <a class="nav-link" routerLink="/register" [routerLinkActive]=[this.activeClass]>Register</a>
-      </ng-container>
+      </ng-template>
     </ul>
-
-    <!-- <ng-container *ngIf="(!isLoggedIn$ | async)">
-      <h1>TEST</h1>>
-    </ng-container> -->
   </nav>
 </header>
-
-{{isLoggedIn$ | async}}

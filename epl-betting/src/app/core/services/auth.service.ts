@@ -2,16 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of as observableOf, BehaviorSubject } from 'rxjs'
 import { map, tap, filter } from 'rxjs/operators';
-
-export interface User {
-  username: string
-  age: number;
-}
-
-const ANONIMOUS_USER: User = {
-  username: undefined,
-  age: undefined
-}
+import { HeaderService } from './header.service';
 
 @Injectable()
 export class AuthService {
@@ -20,22 +11,10 @@ export class AuthService {
   private readonly registerUrl = this.baseUrl + '/signup';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private headerService: HeaderService
   ) { }
 
-  public subject: BehaviorSubject<User> = new BehaviorSubject<User>(ANONIMOUS_USER);
-
-  public user$: Observable<User> = this.subject
-    .asObservable()
-    .pipe(filter(user => {
-      return !!user
-    }));
-
-  public isLoggedIn$: Observable<boolean> = this.user$.pipe(map(user => {
-    console.log('isLoggedIn$', !!user.username)
-    return !!user.username
-  }));
-  
   register(body) {
     return this.http.post(this.registerUrl, body);
   }
@@ -43,29 +22,16 @@ export class AuthService {
   login(body) {
     return this.http.post<any>(this.loginUrl, body)
       .pipe(
-        tap(res => {
-          this.subject.next(res.user)
-          console.log('login ', this.subject)
-        })
-
+        tap(res => this.headerService.signInUser(res.user))
       );
   }
 
   logout() {
-    this.subject.next(ANONIMOUS_USER);
+    this.headerService.signOutUser();
     localStorage.clear();
-    console.log('logged out ', this.subject)
   }
 
   getToken() {
     return localStorage.getItem('token');
-  }
-
-  isAuthenticated(): Observable<boolean> {
-    return observableOf(localStorage.getItem('token') !== null);
-  }
-
-  getUsername() {
-    return localStorage.getItem('username');
   }
 }

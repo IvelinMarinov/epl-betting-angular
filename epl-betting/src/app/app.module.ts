@@ -12,6 +12,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './core/services/auth.service';
 import { LogoutComponent } from './components/logout/logout.component';
+import { HeaderService } from './core/services/header.service';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { LogoutComponent } from './components/logout/logout.component';
   ],
   providers: [
     AuthService,
+    HeaderService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
