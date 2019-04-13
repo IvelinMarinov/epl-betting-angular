@@ -13,6 +13,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './core/services/auth.service';
 import { LogoutComponent } from './components/logout/logout.component';
 import { HeaderService } from './core/services/header.service';
+import { ClubStandingsComponent } from './components/standings/club-standings/club-standings.component';
+import { StandingsService } from './core/services/standings.service';
+import { BetStandingsComponent } from './components/standings/bet-standings/bet-standings.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,9 @@ import { HeaderService } from './core/services/header.service';
     RegisterComponent,
     HeaderComponent,
     HomeComponent,
-    LogoutComponent
+    LogoutComponent,
+    ClubStandingsComponent,
+    BetStandingsComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +37,7 @@ import { HeaderService } from './core/services/header.service';
   providers: [
     AuthService,
     HeaderService,
+    StandingsService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]

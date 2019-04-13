@@ -1,0 +1,33 @@
+<div class="container col-sm-offset-1 col-sm-10">
+  <br />
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>#</th>
+        <th>User</th>
+        <th>Guessed Scores</th>
+        <th>Guessed Signs</th>
+        <th>Total Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of standings; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.guessedScores}}</td>
+        <td>{{user.guessedSigns}}</td>
+        <td>{{user.points}}</td>
+      </tr>
+
+      <!-- {data.map(user => (
+      <tr key={user._id}>
+        <td>{rank++}</td>
+        <td>{user.username}</td>
+        <td>{user.guessedScores}</td>
+        <td>{user.guessedSigns}</td>
+        <td>{user.points }</td>
+      </tr>
+      ))} -->
+    </tbody>
+  </table>
+</div>
