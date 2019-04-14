@@ -8,9 +8,9 @@ import { BetStanding } from 'src/app/components/shared/models/BetStanding';
     providedIn: 'root'
 })
 export class BetStandingsResolver implements Resolve<Array<BetStanding>> {
-    constructor(private strandingsService: StandingsService) { }
+    constructor(private standingsService: StandingsService) { }
 
     resolve (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) :Observable<Array<BetStanding>> {
-        return this.strandingsService.getBetStandings();
+        return this.standingsService.getBetStandings();
     }
 }

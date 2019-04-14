@@ -8,10 +8,10 @@ import { ClubStanding } from 'src/app/components/shared/models/ClubStanding';
     providedIn: 'root'
 })
 export class ClubStandingsResolver implements Resolve<Array<ClubStanding>> {
-    constructor(private strandingsService: StandingsService) { }
+    constructor(private standingsService: StandingsService) { }
 
     resolve (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) :Observable<Array<ClubStanding>> {
-        return this.strandingsService.getClubStandings();
+        return this.standingsService.getClubStandings();
     }
 
 }

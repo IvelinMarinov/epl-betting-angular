@@ -10,6 +10,8 @@ import { BetStandingsComponent } from './components/standings/bet-standings/bet-
 import { BetStandingsResolver } from './core/resolvers/bet-standings.resolver';
 import { SetupRoundComponent } from './components/admin/setup-round/setup-round.component';
 import { CompleteRoundComponent } from './components/admin/complete-round/complete-round.component';
+import { PlaceBetsComponent } from './components/bets/place-bets/place-bets.component';
+import { BetsResolver } from './core/resolvers/bets.resolver';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -17,6 +19,8 @@ const routes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "login", component: LoginComponent },
   { path: "logout", component: LogoutComponent },
+  { path: "admin/setup-round", component: SetupRoundComponent },
+  { path: "admin/complete-round", component: CompleteRoundComponent }, 
   {
     path: "standings/premier-league",
     component: ClubStandingsComponent,
@@ -28,13 +32,10 @@ const routes: Routes = [
     resolve: { standings: BetStandingsResolver }
   },
   {
-    path: "admin/setup-round",
-    component: SetupRoundComponent
-  },
-  {
-    path: "admin/complete-round",
-    component: CompleteRoundComponent
-  }
+    path: "bet",
+    component: PlaceBetsComponent,
+    resolve: { fixture: BetsResolver}
+  }  
 ];
 
 @NgModule({

@@ -1,0 +1,10 @@
+  <div class="container">
+    <div *ngIf="renderError as boolean; else placeBetsForm" class="col-sm-offset-1 col-sm-10">
+      <br />
+      <h3>{{error}}</h3>
+    </div>
+  </div>
+
+  <ng-template #placeBetsForm>
+    <app-place-bets-form [fixture]="fixture"></app-place-bets-form>
+  </ng-template>
