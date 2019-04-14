@@ -19,6 +19,8 @@ import { BetStandingsComponent } from './components/standings/bet-standings/bet-
 import { SetupRoundComponent } from './components/admin/setup-round/setup-round.component';
 import { AdminService } from './core/services/admin.service';
 import { SetupRoundFormComponent } from './components/admin/setup-round-form/setup-round-form.component';
+import { CompleteRoundComponent } from './components/admin/complete-round/complete-round.component';
+import { CompleteRoundFormComponent } from './components/admin/complete-round-form/complete-round-form.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { SetupRoundFormComponent } from './components/admin/setup-round-form/set
     BetStandingsComponent,
     SetupRoundComponent,
     SetupRoundFormComponent,
+    CompleteRoundComponent,
+    CompleteRoundFormComponent,
   ],
   imports: [
     BrowserModule,

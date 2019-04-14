@@ -9,6 +9,7 @@ import { ClubStandingsResolver } from './core/resolvers/club-standings.resolver'
 import { BetStandingsComponent } from './components/standings/bet-standings/bet-standings.component';
 import { BetStandingsResolver } from './core/resolvers/bet-standings.resolver';
 import { SetupRoundComponent } from './components/admin/setup-round/setup-round.component';
+import { CompleteRoundComponent } from './components/admin/complete-round/complete-round.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -29,6 +30,10 @@ const routes: Routes = [
   {
     path: "admin/setup-round",
     component: SetupRoundComponent
+  },
+  {
+    path: "admin/complete-round",
+    component: CompleteRoundComponent
   }
 ];
 
