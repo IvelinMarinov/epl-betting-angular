@@ -16,6 +16,9 @@ import { HeaderService } from './core/services/header.service';
 import { ClubStandingsComponent } from './components/standings/club-standings/club-standings.component';
 import { StandingsService } from './core/services/standings.service';
 import { BetStandingsComponent } from './components/standings/bet-standings/bet-standings.component';
+import { SetupRoundComponent } from './components/admin/setup-round/setup-round.component';
+import { AdminService } from './core/services/admin.service';
+import { SetupRoundFormComponent } from './components/admin/setup-round-form/setup-round-form.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { BetStandingsComponent } from './components/standings/bet-standings/bet-
     HomeComponent,
     LogoutComponent,
     ClubStandingsComponent,
-    BetStandingsComponent
+    BetStandingsComponent,
+    SetupRoundComponent,
+    SetupRoundFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +43,7 @@ import { BetStandingsComponent } from './components/standings/bet-standings/bet-
     AuthService,
     HeaderService,
     StandingsService,
+    AdminService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]

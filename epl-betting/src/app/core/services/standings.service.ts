@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Team } from 'src/app/components/shared/models/Team';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,11 @@ export class StandingsService {
 
   constructor(private http: HttpClient) { }
 
-  getClubStandings() :any {
+  getClubStandings() :Observable<any> {
     return this.http.get(this.clubStandingsUrl);
   }
 
-  getBetStandings() :any {
+  getBetStandings() :Observable<any> {
     return this.http.get((this.userStandingsUrl));
   }  
 }

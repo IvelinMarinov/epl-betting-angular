@@ -1,0 +1,48 @@
+<form [formGroup]="form" (submit)="submitRound()">
+  <div class="container col-sm-offset-1 col-sm-10">
+    <br />
+    <h3>Setup Games for Round {{selectedRound}}</h3>
+    <hr />
+
+    <div *ngFor="let i of gameNumbers" class="row">
+      <div class="col-sm-1">
+        <h6>Game {{i}} </h6>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="form-group">
+          <select class="form-control" formControlName="home_{{i}}">
+            <option *ngFor="let team of teamsDropDownData" value={{team._id}}>{{team.name}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-sm-1 text-center">
+        &nbsp;&nbsp;&nbsp;
+        <span>VS</span>
+        &nbsp;&nbsp;&nbsp;
+      </div>
+
+      <div class="col-sm-3">
+        <div className="form-group">
+          <select class="form-control" formControlName="away_{{i}}">
+            <option *ngFor="let team of teamsDropDownData" value={{team._id}}>{{team.name}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <hr />
+
+    <div class="row">
+      <div class="col-sm-2">
+        <h6 class="control-label">Bets Accepted By</h6>
+      </div>
+      <div class="col-sm-3">
+        <input class="form-control" id="betsAcceptedBy" type="date" formControlName="betsAcceptedBy" />
+      </div>
+    </div>
+    <br />
+    <button class="btn btn-outline-success" type="submit">Submit</button>
+  </div>
+</form>
+<br />

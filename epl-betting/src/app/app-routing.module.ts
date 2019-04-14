@@ -8,6 +8,7 @@ import { ClubStandingsComponent } from './components/standings/club-standings/cl
 import { ClubStandingsResolver } from './core/resolvers/club-standings.resolver';
 import { BetStandingsComponent } from './components/standings/bet-standings/bet-standings.component';
 import { BetStandingsResolver } from './core/resolvers/bet-standings.resolver';
+import { SetupRoundComponent } from './components/admin/setup-round/setup-round.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -24,6 +25,10 @@ const routes: Routes = [
     path: "standings/betting",
     component: BetStandingsComponent,
     resolve: { standings: BetStandingsResolver }
+  },
+  {
+    path: "admin/setup-round",
+    component: SetupRoundComponent
   }
 ];
 

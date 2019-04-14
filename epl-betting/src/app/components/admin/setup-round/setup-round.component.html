@@ -1,0 +1,17 @@
+<div class="container col-sm-offset-1 col-sm-10">
+  <br />
+  <ng-container *ngIf="!isRoundSelected">
+    <h3>Please select round</h3>
+    <hr />
+    <div class="col-sm-2 row">
+      <select class="form-control" (change)="handleRoundsDropDownChange($event)">
+        <option *ngFor="let round of rounds" value="{{round}}">Round {{round}}</option>
+      </select>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isRoundSelected">
+    <app-setup-round-form [selectedRound]="selectedRound">
+    </app-setup-round-form>
+  </ng-container>
+</div>
