@@ -34,6 +34,7 @@ export class HeaderService {
   }
 
   public signOutUser() :void {
+    console.log('sign-out')
     this.subject.next(ANONIMOUS_USER);
   }
 }
