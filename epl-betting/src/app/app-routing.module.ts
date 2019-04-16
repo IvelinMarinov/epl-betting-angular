@@ -18,6 +18,7 @@ import { BetsResolver } from './core/resolvers/bets.resolver';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AdminGuard } from './core/guards/admin.guard';
 import { AnonymousGuard } from './core/guards/anonymous.guard';
+import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -58,7 +59,10 @@ const routes: Routes = [
     component: PlaceBetsComponent,
     canActivate: [AuthGuard], 
     resolve: { fixture: BetsResolver}
-  }  
+  },
+  {
+    path: '**', component: PageNotFoundComponent
+  }
 ];
 
 @NgModule({

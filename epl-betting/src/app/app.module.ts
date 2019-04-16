@@ -25,6 +25,7 @@ import { HeaderService } from './core/services/header.service';
 import { StandingsService } from './core/services/standings.service';
 import { AdminService } from './core/services/admin.service';
 import { BetsService } from './core/services/bets.service';
+import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { BetsService } from './core/services/bets.service';
     CompleteRoundFormComponent,
     PlaceBetsComponent,
     PlaceBetsFormComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
