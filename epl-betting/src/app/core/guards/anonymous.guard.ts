@@ -1,19 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { HeaderService } from '../services/header.service';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoggedInGuard implements CanActivate, OnDestroy {
-    private isLoggedIn: boolean;
-    private subscription: Subscription;
-  
+export class AnonymousGuard implements CanActivate, OnDestroy {
+
     constructor(private authService: AuthService, private router: Router) {
-      // this.subscription = this.authService.isLoggedIn$
-      //   .subscribe(data => this.isLoggedIn = data);
     }
   
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -21,7 +15,6 @@ export class LoggedInGuard implements CanActivate, OnDestroy {
     }
   
     checkAnonymous(): boolean {
-      console.log(this.isLoggedIn)
       if (this.authService.isLoggedIn()) { 
         this.router.navigate(['/home']);
         return false;

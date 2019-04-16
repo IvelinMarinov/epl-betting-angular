@@ -17,6 +17,7 @@ import { SetupRoundFormComponent } from './components/admin/setup-round-form/set
 import { CompleteRoundComponent } from './components/admin/complete-round/complete-round.component';
 import { CompleteRoundFormComponent } from './components/admin/complete-round-form/complete-round-form.component';
 import { PlaceBetsComponent } from './components/bets/place-bets/place-bets.component';
+import { PlaceBetsFormComponent } from './components/bets/place-bets-form/place-bets-form.component';
 
 import { JwtInterceptorService } from './core/interceptors/jwt-interceptor.service';
 import { AuthService } from './core/services/auth.service';
@@ -24,7 +25,6 @@ import { HeaderService } from './core/services/header.service';
 import { StandingsService } from './core/services/standings.service';
 import { AdminService } from './core/services/admin.service';
 import { BetsService } from './core/services/bets.service';
-import { PlaceBetsFormComponent } from './components/bets/place-bets-form/place-bets-form.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,7 @@ import { PlaceBetsFormComponent } from './components/bets/place-bets-form/place-
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule,
+    HttpClientModule
   ],
   providers: [
     AuthService,
