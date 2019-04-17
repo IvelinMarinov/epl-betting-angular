@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AnonymousGuard implements CanActivate, OnDestroy {
+export class AnonymousGuard implements CanActivate {
 
     constructor(private authService: AuthService, private router: Router) {
     }
@@ -21,9 +21,5 @@ export class AnonymousGuard implements CanActivate, OnDestroy {
       }
       
       return true; 
-    }
-  
-    ngOnDestroy() {
-      this.subscription.unsubscribe();
     }
   }

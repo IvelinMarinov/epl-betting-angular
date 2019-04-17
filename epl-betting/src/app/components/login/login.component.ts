@@ -15,9 +15,7 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
-  ) {
-    console.log('constructor login')
-   }
+  ) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -34,12 +32,16 @@ export class LoginComponent implements OnInit {
     this.authService
       .login(this.form.value)
       .subscribe(data => {
-        console.log(data);
-        localStorage.setItem('token', data['token']);
-        localStorage.setItem('name', data['user']['username']);
+        this.signInUser(data);
         this.router.navigate(['/home']);
       }, err => {
         console.log('ERROR', err);
       });
+  }
+
+  signInUser(data) {
+    localStorage.setItem('token', data['token']);
+    localStorage.setItem('name', data['user']['username']);
+    localStorage.setItem('roles', data['user']['roles']);
   }
 }

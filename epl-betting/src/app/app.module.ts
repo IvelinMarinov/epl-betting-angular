@@ -26,6 +26,8 @@ import { StandingsService } from './core/services/standings.service';
 import { AdminService } from './core/services/admin.service';
 import { BetsService } from './core/services/bets.service';
 import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { AdminGuard } from './core/guards/admin.guard';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,7 @@ import { PageNotFoundComponent } from './components/shared/page-not-found/page-n
     HeaderService,
     StandingsService,
     AdminService,
-    BetsService,
+    BetsService,  
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]

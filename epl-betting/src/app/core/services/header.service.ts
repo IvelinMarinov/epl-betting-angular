@@ -13,7 +13,9 @@ const ANONIMOUS_USER: User = {
 })
 export class HeaderService {
 
-  constructor() { }
+  constructor() { 
+    console.log('header service constructor called !!!')
+  }
 
   public subject: BehaviorSubject<User> = new BehaviorSubject<User>(ANONIMOUS_USER);
 

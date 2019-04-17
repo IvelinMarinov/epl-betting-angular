@@ -38,4 +38,14 @@ export class AuthService {
   isLoggedIn() {
     return localStorage.getItem('name') !== null;
   }
+
+  isAdmin() {
+    let roles = localStorage.getItem('roles');
+
+    if(roles !== 'Admin') {      
+      return false;
+    }
+
+    return true;
+  }
 }

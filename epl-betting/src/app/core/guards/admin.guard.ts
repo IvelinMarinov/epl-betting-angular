@@ -1,35 +1,27 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { HeaderService } from '../services/header.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class AdminGuard implements CanActivate, OnDestroy {
-  private isAdmin :boolean;
-  private subscription :Subscription;
+export class AdminGuard implements CanActivate {
 
-  constructor(private authService: HeaderService, private router: Router) {
-    this.subscription = this.authService.isAdmin$
-      .subscribe(data => this.isAdmin = data);
-  }
+  constructor(private authService: AuthService, private router: Router) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     return this.checkIfAdmin();
   }
 
   checkIfAdmin(): boolean {
-    if (this.isAdmin) { 
+    if (this.authService.isAdmin()) { 
       return true; 
     }
 
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
     return false;
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }
