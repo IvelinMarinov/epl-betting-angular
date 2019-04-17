@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -84,11 +86,23 @@ export class RegisterComponent implements OnInit {
 
       this.authService
         .register(reqBody)
-        .subscribe((data) => {
-          console.log(data);
-          this.router.navigate(['/login']);
+        .subscribe(data => {
+          if(data.success) {
+            this.showSuccess(data.message)
+            this.router.navigate(['/login']);
+          } else {
+            this.showError(data.message)
+          }
         }, (err) => {
-          console.log('ERROR', err);
+          this.showError('Something went wrong. Please try again later.', 'ERROR');
         });
+  }
+
+  showSuccess(message: string, title?: string): void {
+    this.toastr.success(message, title);
+  }
+
+  showError(message: string, title?: string): void {
+    this.toastr.error(message)
   }
 }

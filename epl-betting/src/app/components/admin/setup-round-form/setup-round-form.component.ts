@@ -3,6 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AdminService } from 'src/app/core/services/admin.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Team } from '../../shared/models/Team';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-setup-round-form',
@@ -18,7 +19,10 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
   subsciption: Subscription
   gameNumbers: Array<number>;
 
-  constructor(private fb: FormBuilder, private adminService: AdminService
+  constructor(
+    private fb: FormBuilder, 
+    private adminService: AdminService,
+    private toastr: ToastrService
   ) {
     this.gameNumbers = this.getGameNumbersArray();
   }
@@ -73,13 +77,13 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
   submitRound() {
     const values: Array<string> = Object.values(this.form.value);
     if (values.filter(v => v === '').length) {
-      console.error('All fields are required');
+      this.showError('All fields are required');
       return;
     }
 
     const uniqueValues = Array.from(new Set<string>(values))
     if (uniqueValues.length !== values.length) {
-      console.error('The same team cannot be selected for more than one game');
+      this.showError('The same team cannot be selected for more than one game');
       return;
     }
 
@@ -92,14 +96,12 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
     this.adminService.saveRoundData(reqBody).subscribe(
       res => {
         if (res.success) {
-          console.log(res)
-          //success message
-          //redirect
+          this.showSuccess(res.message)
         } else {
-          console.warn(res.message)
+          this.showError(res.message)
         }
       },
-      error => console.warn(error)
+      error => this.showError('Something went wrong. Please try again later.', 'ERROR')
     )
   }
 
@@ -128,5 +130,13 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
     }
 
     return reqBody;
+  }
+
+  showSuccess(message: string, title?: string): void {
+    this.toastr.success(message, title);
+  }
+
+  showError(message: string, title?: string): void {
+    this.toastr.error(message)
   }
 }

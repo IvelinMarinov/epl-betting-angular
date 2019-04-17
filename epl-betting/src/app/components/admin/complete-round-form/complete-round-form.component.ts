@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { Fixture } from '../../shared/models/Fixture';
 import { AdminService } from 'src/app/core/services/admin.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-complete-round-form',
@@ -15,9 +16,11 @@ export class CompleteRoundFormComponent implements OnInit, OnDestroy {
   form: FormGroup;
   subscription: Subscription;
 
-  constructor(private fb: FormBuilder, private adminService: AdminService) {
-    console.log('in form')
-   }
+  constructor(
+    private fb: FormBuilder, 
+    private adminService: AdminService,
+    private toastr: ToastrService
+    ) { }
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -37,7 +40,7 @@ export class CompleteRoundFormComponent implements OnInit, OnDestroy {
   submitResults() {
     const values = Object.values(this.form.value);
     if (values.filter(v => v === '').length) {
-      console.error('All scores are required');
+      this.showError('All scores are required');
       return;
     }
 
@@ -46,14 +49,12 @@ export class CompleteRoundFormComponent implements OnInit, OnDestroy {
     this.subscription = this.adminService.completeRound(reqBody).subscribe(
       res => {
         if (res.success) {
-          console.log(res)
-          //success message
-          //redirect
+          this.showSuccess(res.message);
         } else {
-          console.warn(res.message)
+          this.showError(res.message);
         }
       },
-      error => console.warn(error)
+      error => this.showError('Something went wrong. Please try again later.', 'ERROR')
     )
   }
 
@@ -106,6 +107,14 @@ export class CompleteRoundFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    //this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
+  }
+
+  showSuccess(message: string, title?: string): void {
+    this.toastr.success(message, title);
+  }
+
+  showError(message: string, title?: string): void {
+    this.toastr.error(message)
   }
 }

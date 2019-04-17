@@ -34,13 +34,15 @@ export class LoginComponent implements OnInit {
     this.authService
       .login(this.form.value)
       .subscribe(data => {
-        this.signInUser(data);
-        this.showSuccess();
-        console.log(this.toastr)
-
-        this.router.navigate(['/home']);
+        if (data.success) {
+          this.signInUser(data);
+          this.showSuccess('Enjoy your betting', `Welcome ${data['user']['username']}`);
+          this.router.navigate(['/home']);
+        } else {
+          this.showError(data.message)
+        }
       }, err => {
-        console.log('ERROR', err);
+        this.showError('Something went wrong. Please try again later.', 'ERROR');
       });
   }
 
@@ -50,7 +52,11 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('roles', data['user']['roles']);
   }
 
-  showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!');
+  showSuccess(message: string, title?: string): void {
+    this.toastr.success(message, title);
+  }
+
+  showError(message: string, title?: string): void {
+    this.toastr.error(message)
   }
 }

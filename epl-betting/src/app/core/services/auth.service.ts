@@ -15,11 +15,11 @@ export class AuthService {
     private headerService: HeaderService
   ) { }
 
-  register(body) {
+  register(body): Observable<any> {
     return this.http.post(this.registerUrl, body);
   }
 
-  login(body) {
+  login(body): Observable<any> {
     return this.http.post<any>(this.loginUrl, body)
       .pipe(
         tap(res => this.headerService.signInUser(res.user))

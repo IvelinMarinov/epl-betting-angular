@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Fixture } from '../../shared/models/Fixture';
 import { BetsService } from 'src/app/core/services/bets.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-place-bets-form',
@@ -13,7 +14,11 @@ export class PlaceBetsFormComponent implements OnInit {
   fixture: Fixture;
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private betsService: BetsService) { }
+  constructor(
+    private fb: FormBuilder, 
+    private betsService: BetsService,
+    private toastr: ToastrService
+    ) { }
 
   ngOnInit() {
     this.createForm();
@@ -26,7 +31,7 @@ export class PlaceBetsFormComponent implements OnInit {
   submitBets() {
     const values = Object.values(this.form.value);
     if (values.filter(v => v === '').length) {
-      console.error('All scores are required');
+      this.showError('All scores are required');
       return;
     }
 
@@ -34,17 +39,14 @@ export class PlaceBetsFormComponent implements OnInit {
     console.log(reqBody)
 
     this.betsService.submitBets(reqBody)
-      .subscribe(
-        res => {
+      .subscribe(res => {
           if (res.success) {
-            console.log(res)
-            //success message
-            //redirect
+            this.showSuccess('Bets submitted successfully!');
           } else {
-            console.warn(res.message)
+            this.showError(res.message)
           }
         },
-        error => console.warn(error)
+        error => this.showError('Something went wrong. Please try again later.', 'ERROR')
       )
   }
 
@@ -120,5 +122,13 @@ export class PlaceBetsFormComponent implements OnInit {
       id_9: [this.fixture.gameStats[8]._id],
       id_10: [this.fixture.gameStats[9]._id],
     })
+  }
+
+  showSuccess(message: string, title?: string): void {
+    this.toastr.success(message, title);
+  }
+
+  showError(message: string, title?: string): void {
+    this.toastr.error(message)
   }
 }
