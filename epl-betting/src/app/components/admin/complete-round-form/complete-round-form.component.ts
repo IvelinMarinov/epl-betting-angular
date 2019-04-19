@@ -11,10 +11,9 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './complete-round-form.component.html',
   styleUrls: ['./complete-round-form.component.css']
 })
-export class CompleteRoundFormComponent implements OnInit, OnDestroy {
+export class CompleteRoundFormComponent implements OnInit {
   @Input() fixture: Fixture;
   form: FormGroup;
-  subscription: Subscription;
 
   constructor(
     private fb: FormBuilder, 
@@ -46,7 +45,7 @@ export class CompleteRoundFormComponent implements OnInit, OnDestroy {
 
     let reqBody = this.transformDataToReqBody();
 
-    this.subscription = this.adminService.completeRound(reqBody).subscribe(
+    this.adminService.completeRound(reqBody).subscribe(
       res => {
         if (res.success) {
           this.showSuccess(res.message);
@@ -104,10 +103,6 @@ export class CompleteRoundFormComponent implements OnInit, OnDestroy {
 
   getTeamLogoUrl(teamName) {
     return `assets/images/club-logos/${teamName}.svg`
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
   showSuccess(message: string, title?: string): void {

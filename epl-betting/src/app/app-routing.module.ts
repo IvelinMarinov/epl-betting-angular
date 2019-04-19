@@ -21,18 +21,27 @@ import { AnonymousGuard } from './core/guards/anonymous.guard';
 import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'home' },
-  { path: 'home', component: HomeComponent },
-  { path: 'logout', component: LogoutComponent },
+  { 
+    path: '',
+    pathMatch: 'full', 
+    redirectTo: 'home' 
+  },
+  { 
+    path: 'home', 
+    component: HomeComponent },
+  { 
+    path: 'logout', 
+    component: LogoutComponent 
+  },
   { 
     path: 'register', 
     component: RegisterComponent,
-    canActivate: [AnonymousGuard] 
+    canActivate: [AnonymousGuard],
   },
   { 
     path: 'login', 
     component: LoginComponent, 
-    canActivate: [AnonymousGuard] 
+    canActivate: [AnonymousGuard],
   },
   { 
     path: 'admin/setup-round', 
