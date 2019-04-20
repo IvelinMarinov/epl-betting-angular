@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './components/home/home.component';
-import { RegisterComponent } from './components/register/register.component';
-import { LoginComponent } from './components/login/login.component';
-import { LogoutComponent } from './components/logout/logout.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { LogoutComponent } from './components/auth/logout/logout.component';
 import { ClubStandingsComponent } from './components/standings/club-standings/club-standings.component';
 import { BetStandingsComponent } from './components/standings/bet-standings/bet-standings.component';
 import { SetupRoundComponent } from './components/admin/setup-round/setup-round.component';
