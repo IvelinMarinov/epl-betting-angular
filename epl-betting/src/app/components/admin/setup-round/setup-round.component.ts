@@ -33,6 +33,5 @@ export class SetupRoundComponent implements OnInit {
   handleRoundsDropDownChange(event :any) {
     this.selectedRound = event.target.value;
     this.isRoundSelected = true;
-    console.log(event.target.value);
   }
 }

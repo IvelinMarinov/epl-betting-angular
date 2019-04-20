@@ -20,7 +20,7 @@ export class CompleteRoundComponent implements OnInit, OnDestroy {
   error: string;
   fixtureSubscription: Subscription;
 
-  constructor(private adminService: AdminService) {
+  constructor(private adminService: AdminService, private toastr: ToastrService) {
     this.renderError = false;
     this.hasFetched = false;
     }
@@ -33,23 +33,24 @@ export class CompleteRoundComponent implements OnInit, OnDestroy {
           if (ErrorMessagesToRender.includes(res.message)) {
             this.error = res.message;
             this.renderError = true;
-            console.log(res.message)
-            //show error
             return;
           }
 
           if (res.success) {
             this.fixture = res.data;            
           } else {
-            console.error(res.message)
+            this.showError(res.message)
           }
         },
-        error => console.warn(error)
+        error => this.showError('Something went wrong. Please try again later.', 'ERROR')
       )
+  }
+
+  showError(message: string, title?: string): void {
+    this.toastr.error(message)
   }
 
   ngOnDestroy() {
     this.fixtureSubscription.unsubscribe();
   }
-
 } 

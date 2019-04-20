@@ -13,9 +13,7 @@ const ANONIMOUS_USER: User = {
 })
 export class HeaderService {
 
-  constructor() { 
-    console.log('header service constructor called !!!')
-  }
+  constructor() { }
 
   public subject: BehaviorSubject<User> = new BehaviorSubject<User>(ANONIMOUS_USER);
 
@@ -36,7 +34,6 @@ export class HeaderService {
   }
 
   public signOutUser() :void {
-    console.log('sign-out')
     this.subject.next(ANONIMOUS_USER);
   }
 }

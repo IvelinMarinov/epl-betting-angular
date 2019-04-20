@@ -29,7 +29,6 @@ export class PlaceBetsComponent implements OnInit {
     }
 
     if (!this.data.success) {
-      console.error(this.data.message);
       return;
     }    
 

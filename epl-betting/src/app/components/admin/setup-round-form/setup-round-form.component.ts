@@ -33,12 +33,11 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
         res => {
           if (res.success) {
             this.teamsDropDownData = this.sortTeams(res.data);
-            console.log(this.teamsDropDownData)
           } else {
-            console.warn(res.message)
+            this.showError(res.message)
           }
         },
-        error => console.warn(error)
+        error => this.showError('Something went wrong. Please try again later.', 'ERROR')
       );
 
     this.form = this.fb.group({

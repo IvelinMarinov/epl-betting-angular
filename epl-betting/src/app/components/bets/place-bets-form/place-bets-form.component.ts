@@ -36,8 +36,6 @@ export class PlaceBetsFormComponent implements OnInit {
     }
 
     let reqBody = this.transformStateToRequestBody();
-    console.log(reqBody)
-
     this.betsService.submitBets(reqBody)
       .subscribe(res => {
           if (res.success) {
