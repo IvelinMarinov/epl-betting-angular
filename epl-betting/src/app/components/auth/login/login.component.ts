@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CustomToastrService } from 'src/app/core/services/custom-toastr.service';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -22,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     })
   }
@@ -32,6 +31,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    if(this.form.invalid) {
+      return;
+    }
+    
     this.authService
       .login(this.form.value)
       .subscribe(data => {

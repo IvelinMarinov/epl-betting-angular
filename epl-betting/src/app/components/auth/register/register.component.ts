@@ -78,6 +78,10 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
+    if(this.form.invalid) {
+      return;
+    }
+
     const reqBody = {
       username: this.f.username.value,
       email: this.f.email.value,
