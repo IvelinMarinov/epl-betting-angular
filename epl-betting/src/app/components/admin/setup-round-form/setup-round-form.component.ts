@@ -1,9 +1,13 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { AdminService } from 'src/app/core/services/admin.service';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms'; 
+import { Subscription } from 'rxjs';
+
 import { Team } from '../../shared/models/Team';
-import { ToastrService } from 'ngx-toastr';
+import { AdminService } from 'src/app/core/services/admin.service';
+import { CustomToastrService } from 'src/app/core/services/custom-toastr.service';
+
+const AllFieldsRequiredMsg = 'All fields are required';
+const DuplicateTeamMsg = 'The same team cannot be selected for more than one game';
 
 @Component({
   selector: 'app-setup-round-form',
@@ -20,9 +24,9 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
   gameNumbers: Array<number>;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private adminService: AdminService,
-    private toastr: ToastrService
+    private toastr: CustomToastrService
   ) {
     this.gameNumbers = this.getGameNumbersArray();
   }
@@ -34,10 +38,10 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
           if (res.success) {
             this.teamsDropDownData = this.sortTeams(res.data);
           } else {
-            this.showError(res.message)
+            this.toastr.showError(res.message)
           }
         },
-        error => this.showError('Something went wrong. Please try again later.', 'ERROR')
+        error => this.toastr.showSystemError()
       );
 
     this.form = this.fb.group({
@@ -53,10 +57,6 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
       home_10: ['', Validators.required], away_10: ['', Validators.required],
       betsAcceptedBy: ['', Validators.required],
     });
-  }
-
-  ngOnDestroy() {
-    this.subsciption.unsubscribe();
   }
 
   getGameNumbersArray(): Array<number> {
@@ -76,13 +76,13 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
   submitRound() {
     const values: Array<string> = Object.values(this.form.value);
     if (values.filter(v => v === '').length) {
-      this.showError('All fields are required');
+      this.toastr.showError(AllFieldsRequiredMsg);
       return;
     }
 
     const uniqueValues = Array.from(new Set<string>(values))
     if (uniqueValues.length !== values.length) {
-      this.showError('The same team cannot be selected for more than one game');
+      this.toastr.showError(DuplicateTeamMsg);
       return;
     }
 
@@ -95,12 +95,12 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
     this.adminService.saveRoundData(reqBody).subscribe(
       res => {
         if (res.success) {
-          this.showSuccess(res.message)
+          this.toastr.showSuccess(res.message)
         } else {
-          this.showError(res.message)
+          this.toastr.showError(res.message)
         }
       },
-      error => this.showError('Something went wrong. Please try again later.', 'ERROR')
+      error => this.toastr.showSystemError()
     )
   }
 
@@ -129,13 +129,9 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
     }
 
     return reqBody;
-  }
+  } 
 
-  showSuccess(message: string, title?: string): void {
-    this.toastr.success(message, title);
-  }
-
-  showError(message: string, title?: string): void {
-    this.toastr.error(message)
+  ngOnDestroy() {
+    this.subsciption.unsubscribe();
   }
 }

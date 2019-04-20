@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 
 import { Fixture } from '../../shared/models/Fixture';
 import { AdminService } from 'src/app/core/services/admin.service';
-import { ToastrService } from 'ngx-toastr';
+import { CustomToastrService } from 'src/app/core/services/custom-toastr.service';
 
 @Component({
   selector: 'app-complete-round-form',
@@ -18,7 +17,7 @@ export class CompleteRoundFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private adminService: AdminService,
-    private toastr: ToastrService
+    private toastr: CustomToastrService
     ) { }
 
   ngOnInit() {
@@ -39,7 +38,7 @@ export class CompleteRoundFormComponent implements OnInit {
   submitResults() {
     const values = Object.values(this.form.value);
     if (values.filter(v => v === '').length) {
-      this.showError('All scores are required');
+      this.toastr.showError('All scores are required');
       return;
     }
 
@@ -48,12 +47,12 @@ export class CompleteRoundFormComponent implements OnInit {
     this.adminService.completeRound(reqBody).subscribe(
       res => {
         if (res.success) {
-          this.showSuccess(res.message);
+          this.toastr.showSuccess(res.message);
         } else {
-          this.showError(res.message);
+          this.toastr.showError(res.message);
         }
       },
-      error => this.showError('Something went wrong. Please try again later.', 'ERROR')
+      error => this.toastr.showSystemError()
     )
   }
 
@@ -103,13 +102,5 @@ export class CompleteRoundFormComponent implements OnInit {
 
   getTeamLogoUrl(teamName) {
     return `assets/images/club-logos/${teamName}.svg`
-  }
-
-  showSuccess(message: string, title?: string): void {
-    this.toastr.success(message, title);
-  }
-
-  showError(message: string, title?: string): void {
-    this.toastr.error(message)
   }
 }

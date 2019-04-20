@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from 'src/app/core/services/admin.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-setup-round',
@@ -10,16 +8,13 @@ import { Observable } from 'rxjs';
 export class SetupRoundComponent implements OnInit {
   public selectedRound: number;
   public isRoundSelected: boolean;
-  //public teamsDropDownData$: Observable<any>;
   public rounds: Array<number>;
 
   constructor() {
     this.rounds = this.getRoundsArray();
   }
 
-  ngOnInit() {
-    //this.teamsDropDownData$ = this.adminService.getAllTeams()
-  }
+  ngOnInit() { }
 
   getRoundsArray() {
     let arr = [];

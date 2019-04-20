@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { AuthService } from 'src/app/core/services/auth.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomToastrService } from 'src/app/core/services/custom-toastr.service';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,7 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: CustomToastrService
   ) { }
 
   ngOnInit() {
@@ -84,25 +85,16 @@ export class RegisterComponent implements OnInit {
       dateOfBirth: this.f.dateOfBirth.value
     }
 
-      this.authService
-        .register(reqBody)
-        .subscribe(data => {
-          if(data.success) {
-            this.showSuccess(data.message)
-            this.router.navigate(['/login']);
-          } else {
-            this.showError(data.message)
-          }
-        }, (err) => {
-          this.showError('Something went wrong. Please try again later.', 'ERROR');
-        });
-  }
-
-  showSuccess(message: string, title?: string): void {
-    this.toastr.success(message, title);
-  }
-
-  showError(message: string, title?: string): void {
-    this.toastr.error(message)
+    this.authService
+      .register(reqBody)
+      .subscribe(data => {
+        if (data.success) {
+          this.toastr.showSuccess(data.message)
+          this.router.navigate(['/login']);
+        } else {
+          this.toastr.showError(data.message)
+        }
+      }, err => this.toastr.showSystemError()
+      );
   }
 }

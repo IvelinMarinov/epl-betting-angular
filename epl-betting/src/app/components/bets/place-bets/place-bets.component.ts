@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CustomToastrService } from 'src/app/core/services/custom-toastr.service';
 
 const ErrorMessagesToRender = [
   'There is no active round currently, please come back again later!',
@@ -17,7 +18,7 @@ export class PlaceBetsComponent implements OnInit {
   renderError: boolean;
   error: string;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private toastr: CustomToastrService) { }
 
   ngOnInit() {
     this.data = this.route.snapshot.data['fixture'];
@@ -29,6 +30,7 @@ export class PlaceBetsComponent implements OnInit {
     }
 
     if (!this.data.success) {
+      this.toastr.showError(this.data.message)
       return;
     }    
 

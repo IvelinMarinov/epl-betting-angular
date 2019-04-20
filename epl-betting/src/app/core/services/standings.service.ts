@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Team } from 'src/app/components/shared/models/Team';
 import { Observable } from 'rxjs';
 
 @Injectable({

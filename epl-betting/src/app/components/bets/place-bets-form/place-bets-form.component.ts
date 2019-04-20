@@ -1,8 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 import { Fixture } from '../../shared/models/Fixture';
 import { BetsService } from 'src/app/core/services/bets.service';
-import { ToastrService } from 'ngx-toastr';
+import { CustomToastrService } from 'src/app/core/services/custom-toastr.service';
+
+const AllScoresRequiredMsg = 'All scores are required';
+const BetsSubmitSuccessMssg = 'Bets submitted successfully!';
 
 @Component({
   selector: 'app-place-bets-form',
@@ -17,7 +21,7 @@ export class PlaceBetsFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private betsService: BetsService,
-    private toastr: ToastrService
+    private toastr: CustomToastrService
     ) { }
 
   ngOnInit() {
@@ -31,7 +35,7 @@ export class PlaceBetsFormComponent implements OnInit {
   submitBets() {
     const values = Object.values(this.form.value);
     if (values.filter(v => v === '').length) {
-      this.showError('All scores are required');
+      this.toastr.showError(AllScoresRequiredMsg);
       return;
     }
 
@@ -39,12 +43,12 @@ export class PlaceBetsFormComponent implements OnInit {
     this.betsService.submitBets(reqBody)
       .subscribe(res => {
           if (res.success) {
-            this.showSuccess('Bets submitted successfully!');
+            this.toastr.showSuccess(BetsSubmitSuccessMssg);
           } else {
-            this.showError(res.message)
+            this.toastr.showError(res.message)
           }
         },
-        error => this.showError('Something went wrong. Please try again later.', 'ERROR')
+        error => this.toastr.showSystemError()
       )
   }
 
@@ -120,13 +124,5 @@ export class PlaceBetsFormComponent implements OnInit {
       id_9: [this.fixture.gameStats[8]._id],
       id_10: [this.fixture.gameStats[9]._id],
     })
-  }
-
-  showSuccess(message: string, title?: string): void {
-    this.toastr.success(message, title);
-  }
-
-  showError(message: string, title?: string): void {
-    this.toastr.error(message)
   }
 }

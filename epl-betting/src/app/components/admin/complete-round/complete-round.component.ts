@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AdminService } from 'src/app/core/services/admin.service';
 import { Subscription } from 'rxjs';
 import { Fixture } from '../../shared/models/Fixture';
+import { CustomToastrService } from 'src/app/core/services/custom-toastr.service';
 
 const ErrorMessagesToRender = [
   'There are no active rounds, please set up a new round!',
@@ -14,16 +15,16 @@ const ErrorMessagesToRender = [
   styleUrls: ['./complete-round.component.css']
 })
 export class CompleteRoundComponent implements OnInit, OnDestroy {
-  fixture: Fixture;v
+  fixture: Fixture;
   renderError: boolean = false;
   hasFetched: boolean;
   error: string;
   fixtureSubscription: Subscription;
 
-  constructor(private adminService: AdminService, private toastr: ToastrService) {
+  constructor(private adminService: AdminService, private toastr: CustomToastrService) {
     this.renderError = false;
     this.hasFetched = false;
-    }
+  }
 
   ngOnInit() {
     this.fixtureSubscription = this.adminService.getActiveRound()
@@ -37,17 +38,13 @@ export class CompleteRoundComponent implements OnInit, OnDestroy {
           }
 
           if (res.success) {
-            this.fixture = res.data;            
+            this.fixture = res.data;
           } else {
-            this.showError(res.message)
+            this.toastr.showError(res.message)
           }
         },
-        error => this.showError('Something went wrong. Please try again later.', 'ERROR')
+        error => this.toastr.showSystemError()
       )
-  }
-
-  showError(message: string, title?: string): void {
-    this.toastr.error(message)
   }
 
   ngOnDestroy() {
