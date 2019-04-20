@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Fixture } from '../../shared/models/Fixture';
 import { AdminService } from 'src/app/core/services/admin.service';
@@ -17,7 +18,8 @@ export class CompleteRoundFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private adminService: AdminService,
-    private toastr: CustomToastrService
+    private toastr: CustomToastrService,
+    private router: Router
     ) { }
 
   ngOnInit() {
@@ -48,6 +50,7 @@ export class CompleteRoundFormComponent implements OnInit {
       res => {
         if (res.success) {
           this.toastr.showSuccess(res.message);
+          this.router.navigate(['/standings/premier-league']);
         } else {
           this.toastr.showError(res.message);
         }

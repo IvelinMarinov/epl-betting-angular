@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms'; 
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Team } from '../../shared/models/Team';
@@ -26,7 +27,8 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private adminService: AdminService,
-    private toastr: CustomToastrService
+    private toastr: CustomToastrService,
+    private router: Router
   ) {
     this.gameNumbers = this.getGameNumbersArray();
   }
@@ -96,6 +98,7 @@ export class SetupRoundFormComponent implements OnInit, OnDestroy {
       res => {
         if (res.success) {
           this.toastr.showSuccess(res.message)
+          this.router.navigate(['/standings/premier-league']);
         } else {
           this.toastr.showError(res.message)
         }

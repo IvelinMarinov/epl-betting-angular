@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { Fixture } from '../../shared/models/Fixture';
 import { BetsService } from 'src/app/core/services/bets.service';
@@ -21,7 +22,8 @@ export class PlaceBetsFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private betsService: BetsService,
-    private toastr: CustomToastrService
+    private toastr: CustomToastrService,
+    private router: Router
     ) { }
 
   ngOnInit() {
@@ -44,6 +46,7 @@ export class PlaceBetsFormComponent implements OnInit {
       .subscribe(res => {
           if (res.success) {
             this.toastr.showSuccess(BetsSubmitSuccessMssg);
+            this.router.navigate(['/standings/premier-league']);
           } else {
             this.toastr.showError(res.message)
           }
@@ -93,26 +96,26 @@ export class PlaceBetsFormComponent implements OnInit {
 
   createForm() {
     this.form = this.fb.group({
-      home_1: [this.fixture.gameStats[0].homeTeamGoals || '', Validators.required],
-      home_2: [this.fixture.gameStats[1].homeTeamGoals || '', Validators.required],
-      home_3: [this.fixture.gameStats[2].homeTeamGoals || '', Validators.required],
-      home_4: [this.fixture.gameStats[3].homeTeamGoals || '', Validators.required],
-      home_5: [this.fixture.gameStats[4].homeTeamGoals || '', Validators.required],
-      home_6: [this.fixture.gameStats[5].homeTeamGoals || '', Validators.required],
-      home_7: [this.fixture.gameStats[6].homeTeamGoals || '', Validators.required],
-      home_8: [this.fixture.gameStats[7].homeTeamGoals || '', Validators.required],
-      home_9: [this.fixture.gameStats[8].homeTeamGoals || '', Validators.required],
-      home_10: [this.fixture.gameStats[9].homeTeamGoals || '', Validators.required],
-      away_1: [this.fixture.gameStats[0].awayTeamGoals || '', Validators.required],
-      away_2: [this.fixture.gameStats[1].awayTeamGoals || '', Validators.required],
-      away_3: [this.fixture.gameStats[2].awayTeamGoals || '', Validators.required],
-      away_4: [this.fixture.gameStats[3].awayTeamGoals || '', Validators.required],
-      away_5: [this.fixture.gameStats[4].awayTeamGoals || '', Validators.required],
-      away_6: [this.fixture.gameStats[5].awayTeamGoals || '', Validators.required],
-      away_7: [this.fixture.gameStats[6].awayTeamGoals || '', Validators.required],
-      away_8: [this.fixture.gameStats[7].awayTeamGoals || '', Validators.required],
-      away_9: [this.fixture.gameStats[8].awayTeamGoals || '', Validators.required],
-      away_10: [this.fixture.gameStats[9].awayTeamGoals || '', Validators.required],
+      home_1: [this.fixture.gameStats[0].homeTeamGoals || '0', Validators.required],
+      home_2: [this.fixture.gameStats[1].homeTeamGoals || '0', Validators.required],
+      home_3: [this.fixture.gameStats[2].homeTeamGoals || '0', Validators.required],
+      home_4: [this.fixture.gameStats[3].homeTeamGoals || '0', Validators.required],
+      home_5: [this.fixture.gameStats[4].homeTeamGoals || '0', Validators.required],
+      home_6: [this.fixture.gameStats[5].homeTeamGoals || '0', Validators.required],
+      home_7: [this.fixture.gameStats[6].homeTeamGoals || '0', Validators.required],
+      home_8: [this.fixture.gameStats[7].homeTeamGoals || '0', Validators.required],
+      home_9: [this.fixture.gameStats[8].homeTeamGoals || '0', Validators.required],
+      home_10: [this.fixture.gameStats[9].homeTeamGoals || '0', Validators.required],
+      away_1: [this.fixture.gameStats[0].awayTeamGoals || '0', Validators.required],
+      away_2: [this.fixture.gameStats[1].awayTeamGoals || '0', Validators.required],
+      away_3: [this.fixture.gameStats[2].awayTeamGoals || '0', Validators.required],
+      away_4: [this.fixture.gameStats[3].awayTeamGoals || '0', Validators.required],
+      away_5: [this.fixture.gameStats[4].awayTeamGoals || '0', Validators.required],
+      away_6: [this.fixture.gameStats[5].awayTeamGoals || '0', Validators.required],
+      away_7: [this.fixture.gameStats[6].awayTeamGoals || '0', Validators.required],
+      away_8: [this.fixture.gameStats[7].awayTeamGoals || '0', Validators.required],
+      away_9: [this.fixture.gameStats[8].awayTeamGoals || '0', Validators.required],
+      away_10: [this.fixture.gameStats[9].awayTeamGoals || '0', Validators.required],
       id_1: [this.fixture.gameStats[0]._id],
       id_2: [this.fixture.gameStats[1]._id],
       id_3: [this.fixture.gameStats[2]._id],

@@ -1,5 +1,5 @@
 <form [formGroup]="form" (submit)="this.submitResults()">
-    <div class="container col-sm-offset-1 col-sm-10">
+    <div class="container">
         <br />
         <h3>Complete Round {{fixture.round}}</h3>
         <hr />
@@ -10,7 +10,7 @@
                 <div class="row col-sm-5">
                     <img src={{this.getTeamLogoUrl(game.homeTeamId.shortName)}} alt="" />
                     &nbsp;&nbsp;
-                    <h5>{{game.homeTeamId.name}}</h5>
+                    <h6>{{game.homeTeamId.name}}</h6>
                     &nbsp;
                     <div class="ml-auto">
                         <input formControlName="home_{{i + 1}}" class="form-control" type="number" min="0" max="9" step="1" />
@@ -31,7 +31,7 @@
                     </div>
                     <div class="row ml-auto">
                         &nbsp;
-                        <h5>{{game.awayTeamId.name}}</h5>
+                        <h6>{{game.awayTeamId.name}}</h6>
                         &nbsp;&nbsp;
                         <img src={{this.getTeamLogoUrl(game.awayTeamId.shortName)}} alt="" />
                     </div>

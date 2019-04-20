@@ -22,6 +22,7 @@ export class PlaceBetsComponent implements OnInit {
 
   ngOnInit() {
     this.data = this.route.snapshot.data['fixture'];
+    console.log(this.data)
 
     if (ErrorMessagesToRender.includes(this.data.message)) {
       this.renderError = true;
